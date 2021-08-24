@@ -25,7 +25,7 @@ public class Config {
     }
 
     public Config(String path, String filename) {
-        this("plugins//Challenges//", path, filename);
+        this("plugins//CityBuild//", path, filename);
     }
 
     public Config(String filename) {

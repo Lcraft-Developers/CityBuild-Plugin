@@ -1,0 +1,11 @@
+challenges:
+  PREFIX: §7[§6CityBuild§7] §r
+  START_PREFIX: ' §7>> §r'
+  NO_PERMISSIONS: §cDazu hast du keine Rechte!
+  NO_PLAYER: §cDazu musst du ein Spieler sein!
+  NO_COMMAND_FOUND: §cDieser Command wurde nicht gefunden!
+  NO_NUMBER: §cDies ist keine g§ltige Nummer.
+  NO_PLAYER_FOUND: §cDieser Spieler wurde nich gefunden
+  ON_LOAD: §7[§6CityBuild§7] §r§aDas Plugin wurde erfolgreich geladen.
+  ON_START: §7[§6CityBuild§7] §r§aDas Plugin wurde erfolgreich gestartet.
+  ON_STOP: §7[§6CityBuild§7] §r§aDas Plugin wurde erfolgreich gestoppt.

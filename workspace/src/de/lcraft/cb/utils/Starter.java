@@ -10,14 +10,14 @@ public class Starter {
 
     public static String PREFIX = "§7[§6CityBuild§7] §r",
             START_PREFIX = " §7>> §r",
-            NO_PERMISSIONS = "§cDazu hast du keine Rechte!",
-            NO_PLAYER = "§cDazu musst du ein Spieler sein!",
-            NO_COMMAND_FOUND = "§cDieser Command wurde nicht gefunden!",
-            NO_NUMBER = "§cDies ist keine g§ltige Nummer.",
-            ON_LOAD = PREFIX + "§aDas Plugin wurde erfolgreich geladen.",
-            ON_START = PREFIX + "§aDas Plugin wurde erfolgreich gestartet.",
-            ON_STOP = PREFIX + "§aDas Plugin wurde erfolgreich gestoppt.",
-            NO_PLAYER_FOUND = "§cDieser Spieler wurde nich gefunden";
+            NO_PERMISSIONS = "§cYou do not have permissions for taht!",
+            NO_PLAYER = "§cYou must be a player to use that!",
+            NO_COMMAND_FOUND = "§cThat command do not exists!",
+            NO_NUMBER = "§cThats not a normal number!",
+            ON_LOAD = PREFIX + "§aThe Plugin is loaded.",
+            ON_START = PREFIX + "§aThe Plugin is started.",
+            ON_STOP = PREFIX + "§aThe Plugin is stoppted.",
+            NO_PLAYER_FOUND = "§cThis Player doesnt exists!";
 
     public void startPlugin(Config mainCFG, JavaPlugin plugin) {
         try {

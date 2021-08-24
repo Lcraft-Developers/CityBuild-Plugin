@@ -1,5 +1,6 @@
 package de.lcraft.cb.utils;
 
+import de.lcraft.cb.languages.Language;
 import de.lcraft.cb.languages.LanguagesManager;
 import de.lcraft.cb.main.Main;
 import org.bukkit.command.CommandExecutor;
@@ -31,20 +32,38 @@ public abstract class Command extends Starter implements CommandExecutor, Listen
 		return Main.getPermsManager().hasPermissions(p, perm);
 	}
 
+	public boolean hasPermissions(Player p, String... perm) {
+		boolean a = false;
+		for(String c : perm) {
+			if(Main.getPermsManager().hasPermissions(p, c)) {
+				a = true;
+			}
+		}
+		return a;
+	}
+
 	public de.lcraft.cb.utils.TabCompleter addTabComplete(String commandSlah, String[] beforeArgs, ArrayList<String> possebilitis) {
 		return new de.lcraft.cb.utils.TabCompleter(plugin, commandSlah, beforeArgs, possebilitis);
 	}
-	
-	public String getHelpMessage(Player p, String... help) {
-		String end = PREFIX + "§cBitte benutze §6/" + help[0];
+
+	public String getHelpMessage(Language lang, String... help) {
+		String end = PREFIX + LanguagesManager.translate("§cPlease use", lang) + " §6/" + help[0];
 		for(int i = 1; i < help.length; i++) {
-			end = end + " §coder §6/" + help[i];
+			end = end + " " + LanguagesManager.translate("§cor", lang) + " §6/" + help[i];
 		}
 		end = end + " §c!";
-		if(p == null) {
+		if(lang == null) {
 			return end;
 		}
-		return LanguagesManager.translate(end, p.getUniqueId());
+		return end;
+	}
+
+	public String getHelpMessage(Player p, String... help) {
+		return getHelpMessage(LanguagesManager.getPlayer(p.getUniqueId()), help);
+	}
+
+	public String getHelpMessage(String... help) {
+		return getHelpMessage(LanguagesManager.getNormalLanguage(), help);
 	}
 
 	@Override

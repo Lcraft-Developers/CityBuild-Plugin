@@ -1,5 +1,6 @@
 package de.lcraft.cb.main;
 
+import de.lcraft.cb.commands.TPSCommand;
 import de.lcraft.cb.languages.LanguagesManager;
 import de.lcraft.cb.permissions.PermissionsManager;
 import de.lcraft.cb.utils.Command;
@@ -31,6 +32,9 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         load();
         plugin = this;
+
+        // Register all Commands
+        registerCommand("tps", new TPSCommand(plugin));
 
         Bukkit.broadcastMessage(Starter.ON_START);
     }

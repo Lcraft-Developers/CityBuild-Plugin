@@ -11,10 +11,13 @@ import java.util.UUID;
 public class LanguagesManager {
 
     public static HashMap<String, Language> langs;
-    public static Config playerCfg;
+    public static Config playerCfg,
+                         cfg;
 
     public LanguagesManager() {
         playerCfg = new Config("langs", "players.yml");
+        cfg = new Config("langs", "config.yml");
+        cfg.getOption(cfg, "server.language", "en");
         langs = new HashMap<>();
 
         addLang(new German());
@@ -30,8 +33,12 @@ public class LanguagesManager {
         if(playerCfg.cfg().contains(root)) {
             return getLanguage(playerCfg.cfg().get(root).toString());
         } else {
-            return langs.get("en");
+            return langs.get(cfg.cfg().get("server.language"));
         }
+    }
+
+    public static Language getPlayer(Player p) {
+        return getPlayer(p.getUniqueId());
     }
 
     public static void setPlayer(UUID player, Language lang) {
@@ -46,7 +53,7 @@ public class LanguagesManager {
                 return c;
             }
         }
-        return langs.get("en");
+        return langs.get(cfg.cfg().get("server.language"));
     }
 
     public static ArrayList<ItemStack> getAllItems(Player p) {
@@ -55,6 +62,10 @@ public class LanguagesManager {
             c.add(l.getItem(p));
         }
         return c;
+    }
+
+    public static Language getNormalLanguage() {
+        return getLanguage(cfg.cfg().getString("server.language"));
     }
 
     public static String translate(String normal, UUID player) {

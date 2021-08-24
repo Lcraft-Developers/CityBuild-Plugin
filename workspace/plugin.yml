@@ -5,3 +5,7 @@ authors:
   - LPD
 website: lcraft.de
 main: de.lcraft.cb.main.Main
+
+commands:
+  tps:
+    description: Show you the current TPS

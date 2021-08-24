@@ -1,0 +1,5 @@
+systems:
+  luckperms:
+    enabled: false
+config:
+  opcanall: true

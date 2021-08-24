@@ -1,0 +1,7 @@
+name: CityBuild
+version: 1.0
+api-version: 1.17
+authors:
+  - LPD
+website: lcraft.de
+main: de.lcraft.cb.main.Main

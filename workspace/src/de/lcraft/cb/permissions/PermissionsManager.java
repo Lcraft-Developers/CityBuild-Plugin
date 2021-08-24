@@ -61,6 +61,7 @@ public class PermissionsManager {
         } else {
             activated = allPermissionsCfg.cfg().getBoolean("permissions." + permission + ".enabled");
         }
+        allPermissionsCfg.save();
 
         if(!activated) {
             return true;

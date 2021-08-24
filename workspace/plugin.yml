@@ -5,6 +5,7 @@ authors:
   - LPD
 website: lcraft.de
 main: de.lcraft.cb.main.Main
+load: POSTWORLD
 
 commands:
   tps:

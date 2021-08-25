@@ -15,3 +15,6 @@ server:
       enabled: false
   reload:
     msg: §6Please rejoin
+  leave:
+    msg:
+      enabled: false

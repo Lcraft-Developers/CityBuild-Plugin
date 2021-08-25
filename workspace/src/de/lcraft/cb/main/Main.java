@@ -1,6 +1,8 @@
 package de.lcraft.cb.main;
 
 import de.lcraft.cb.commands.GamemodeCommand;
+import de.lcraft.cb.commands.SetSpawnCommand;
+import de.lcraft.cb.commands.SpawnCommand;
 import de.lcraft.cb.commands.TPSCommand;
 import de.lcraft.cb.languages.LanguagesManager;
 import de.lcraft.cb.listeners.JoinListener;
@@ -52,6 +54,8 @@ public class Main extends JavaPlugin {
         registerCommand("tps", new TPSCommand(plugin));
         registerCommand("gm", new GamemodeCommand(plugin));
         registerCommand("gamemode", new GamemodeCommand(plugin));
+        registerCommand("spawn", new SpawnCommand(plugin));
+        registerCommand("setspawn", new SetSpawnCommand(plugin));
 
         Bukkit.broadcastMessage(Starter.ON_START);
     }

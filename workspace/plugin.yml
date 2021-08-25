@@ -14,3 +14,7 @@ commands:
     description: Changes Gamemode
   gamemode:
     description: Changes Gamemode
+  setspawn:
+    description: Sets the Spawn
+  spawn:
+    description: Teleports you to the Spawn

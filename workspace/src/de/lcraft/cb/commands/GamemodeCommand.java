@@ -70,6 +70,7 @@ public class GamemodeCommand extends Command {
                             hasPermissions(p, "cb.gamemode.other.1") ||
                             hasPermissions(p, "cb.gamemode.other.2") ||
                             hasPermissions(p, "cb.gamemode.other.3") ||
+                            hasPermissions(p, "cb.gamemode.admin") ||
                             hasPermissions(p, "cb.admin")) {
                         hasPermissions = true;
                     }
@@ -80,7 +81,8 @@ public class GamemodeCommand extends Command {
                 if(hasPermissions) {
                     if(gm.equalsIgnoreCase("0") || args[0].equalsIgnoreCase("survival")) {
                         if(s instanceof Player) {
-                            if(hasPermissions((Player)s, "cb.admin") || hasPermissions((Player)s, "cb.gamemode.other.*") || hasPermissions((Player)s, "cb.gamemode.other.0")) {
+                            if(hasPermissions((Player)s, "cb.admin") || hasPermissions((Player)s, "cb.gamemode.other.*") || hasPermissions((Player)s, "cb.gamemode.other.0") ||
+                            hasPermissions((Player)s, "cb.gamemode.admin")) {
                                 c.setGamemode("0");
                                 cU.sendMessage(PREFIX + translate(cU, "§aYour gamemode has changed to §6Survival"));
                                 s.sendMessage(translate((Player)s, PREFIX + "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Survival").replace("%PLAYER%", cU.getName()));
@@ -94,7 +96,8 @@ public class GamemodeCommand extends Command {
                         }
                     } else if(gm.equalsIgnoreCase("1") || args[0].equalsIgnoreCase("creative")) {
                         if(s instanceof Player) {
-                            if(hasPermissions((Player)s, "cb.admin") || hasPermissions((Player)s, "cb.gamemode.other.*") || hasPermissions((Player)s, "cb.gamemode.other.1")) {
+                            if(hasPermissions((Player)s, "cb.admin") || hasPermissions((Player)s, "cb.gamemode.other.*") || hasPermissions((Player)s, "cb.gamemode.other.1") ||
+                                    hasPermissions((Player)s, "cb.gamemode.admin")) {
                                 c.setGamemode("1");
                                 cU.sendMessage(PREFIX + translate(cU, "§aYour gamemode has changed to §6Creative"));
                                 s.sendMessage(translate((Player)s, PREFIX + "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Creative").replace("%PLAYER%", cU.getName()));
@@ -108,7 +111,8 @@ public class GamemodeCommand extends Command {
                         }
                     } else if(gm.equalsIgnoreCase("2") || args[0].equalsIgnoreCase("adventure")) {
                         if(s instanceof Player) {
-                            if(hasPermissions((Player)s, "cb.admin") || hasPermissions((Player)s, "cb.gamemode.other.*") || hasPermissions((Player)s, "cb.gamemode.other.2")) {
+                            if(hasPermissions((Player)s, "cb.admin") || hasPermissions((Player)s, "cb.gamemode.other.*") || hasPermissions((Player)s, "cb.gamemode.other.2") ||
+                                    hasPermissions((Player)s, "cb.gamemode.admin")) {
                                 c.setGamemode("2");
                                 cU.sendMessage(PREFIX + translate(cU, "§aYour gamemode has changed to §6Adventure"));
                                 s.sendMessage(translate((Player)s, PREFIX + "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Adventure").replace("%PLAYER%", cU.getName()));
@@ -122,7 +126,8 @@ public class GamemodeCommand extends Command {
                         }
                     } else if(gm.equalsIgnoreCase("3") || args[0].equalsIgnoreCase("spectator")) {
                         if(s instanceof Player) {
-                            if(hasPermissions((Player)s, "cb.admin") || hasPermissions((Player)s, "cb.gamemode.other.*") || hasPermissions((Player)s, "cb.gamemode.other.0")) {
+                            if(hasPermissions((Player)s, "cb.admin") || hasPermissions((Player)s, "cb.gamemode.other.*") || hasPermissions((Player)s, "cb.gamemode.other.0") ||
+                                    hasPermissions((Player)s, "cb.gamemode.admin")) {
                                 c.setGamemode("3");
                                 cU.sendMessage(PREFIX + translate(cU, "§aYour gamemode has changed to §6Spectator"));
                                 s.sendMessage(translate((Player)s, PREFIX + "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Spectator").replace("%PLAYER%", cU.getName()));
@@ -153,30 +158,31 @@ public class GamemodeCommand extends Command {
                         hasPermissions(p, "cb.gamemode.self.1") ||
                         hasPermissions(p, "cb.gamemode.self.2") ||
                         hasPermissions(p, "cb.gamemode.self.3") ||
+                        hasPermissions(p, "cb.gamemode.admin") ||
                         hasPermissions(p, "cb.admin")) {
                     if(args[0].equalsIgnoreCase("0") || args[0].equalsIgnoreCase("survival")) {
-                        if(hasPermissions(p, "cb.admin") || hasPermissions(p, "cb.gamemode.self.*") || hasPermissions(p, "cb.gamemode.self.0")) {
+                        if(hasPermissions(p, "cb.admin") || hasPermissions(p, "cb.gamemode.self.*") || hasPermissions(p, "cb.gamemode.self.0") || hasPermissions(p, "cb.gamemode.admin")) {
                             u.setGamemode("0");
                             p.sendMessage(PREFIX + translate(p, "§aYour gamemode has changed to §6Survival"));
                         } else {
                             p.sendMessage(NO_PERMISSIONS(p.getUniqueId()));
                         }
                     } else if(args[0].equalsIgnoreCase("1") || args[0].equalsIgnoreCase("creative")) {
-                        if(hasPermissions(p, "cb.admin") || hasPermissions(p, "cb.gamemode.self.*") || hasPermissions(p, "cb.gamemode.self.1")) {
+                        if(hasPermissions(p, "cb.admin") || hasPermissions(p, "cb.gamemode.self.*") || hasPermissions(p, "cb.gamemode.self.1") || hasPermissions(p, "cb.gamemode.admin")) {
                             u.setGamemode("1");
                             p.sendMessage(PREFIX + translate(p, "§aYour gamemode has changed to §6Creative"));
                         } else {
                             p.sendMessage(NO_PERMISSIONS(p.getUniqueId()));
                         }
                     } else if(args[0].equalsIgnoreCase("2") || args[0].equalsIgnoreCase("adventure")) {
-                        if(hasPermissions(p, "cb.admin") || hasPermissions(p, "cb.gamemode.self.*") || hasPermissions(p, "cb.gamemode.self.2")) {
+                        if(hasPermissions(p, "cb.admin") || hasPermissions(p, "cb.gamemode.self.*") || hasPermissions(p, "cb.gamemode.self.2") || hasPermissions(p, "cb.gamemode.admin")) {
                             u.setGamemode("2");
                             p.sendMessage(PREFIX + translate(p, "§aYour gamemode has changed to §6Adventure"));
                         } else {
                             p.sendMessage(NO_PERMISSIONS(p.getUniqueId()));
                         }
                     } else if(args[0].equalsIgnoreCase("3") || args[0].equalsIgnoreCase("spectator")) {
-                        if(hasPermissions(p, "cb.admin") || hasPermissions(p, "cb.gamemode.self.*") || hasPermissions(p, "cb.gamemode.self.3")) {
+                        if(hasPermissions(p, "cb.admin") || hasPermissions(p, "cb.gamemode.self.*") || hasPermissions(p, "cb.gamemode.self.3") || hasPermissions(p, "cb.gamemode.admin")) {
                             u.setGamemode("3");
                             p.sendMessage(PREFIX + translate(p, "§aYour gamemode has changed to §6Spectator"));
                         } else {

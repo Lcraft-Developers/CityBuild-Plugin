@@ -43,3 +43,9 @@ id:
       §6Spectator
     translate: §7[§6CityBuild§7] §r§aPlayer §6%PLAYER%s§a gamemode has been changed
       to §6Spectator
+  '5690':
+    normal: §aThe Spawn is now setted.
+    translate: §aThe Spawn is now setted.
+  '10308':
+    normal: §aYou have been teleported to the spawn.
+    translate: §aYou have been teleported to the spawn.

@@ -9,3 +9,9 @@ challenges:
   ON_LOAD: §7[§6CityBuild§7] §r§aThe Plugin is loaded.
   ON_START: §7[§6CityBuild§7] §r§aThe Plugin is started.
   ON_STOP: §7[§6CityBuild§7] §r§aThe Plugin is stoppted.
+server:
+  join:
+    msg:
+      enabled: false
+  reload:
+    msg: §6Please rejoin

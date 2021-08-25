@@ -10,16 +10,16 @@ public class Starter {
 
     public static String PREFIX = "§7[§6CityBuild§7] §r",
             START_PREFIX = " §7>> §r",
-            NO_PERMISSIONS = "§cYou do not have permissions for taht!",
+            NO_PERMISSIONS = "§cYou do not have permissions for that!",
             NO_PLAYER = "§cYou must be a player to use that!",
             NO_COMMAND_FOUND = "§cThat command do not exists!",
             NO_NUMBER = "§cThats not a normal number!",
             ON_LOAD = PREFIX + "§aThe Plugin is loaded.",
             ON_START = PREFIX + "§aThe Plugin is started.",
-            ON_STOP = PREFIX + "§aThe Plugin is stoppted.",
-            NO_PLAYER_FOUND = "§cThis Player doesnt exists!";
+            ON_STOP = PREFIX + "§aThe Plugin is stopped.",
+            NO_PLAYER_FOUND = "§cThis Player doesn't exists!";
 
-    public void startPlugin(Config mainCFG, JavaPlugin plugin) {
+    public Config startPlugin(Config mainCFG, JavaPlugin plugin) {
         try {
             mainCFG = new Config("config.yml");
             PREFIX = (String) Config.getOption(mainCFG, "challenges.PREFIX", PREFIX);
@@ -35,10 +35,12 @@ public class Starter {
             ON_STOP = (String) Config.getOption(mainCFG, "challenges.ON_STOP", ON_STOP);
 
             Bukkit.broadcastMessage(ON_LOAD);
+            return mainCFG;
         } catch (Exception e) {
             e.printStackTrace();
             Bukkit.broadcastMessage("§cERRRRRROR!!!");
         }
+        return null;
     }
 
     public static void sendActionBar(Player p, String msg){

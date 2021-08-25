@@ -1,0 +1,6 @@
+permissions:
+  cb:
+    gamemode:
+      self:
+        name: cb.gamemode.self
+        enabled: true

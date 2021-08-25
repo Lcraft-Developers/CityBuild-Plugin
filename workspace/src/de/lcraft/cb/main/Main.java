@@ -1,14 +1,20 @@
 package de.lcraft.cb.main;
 
+import de.lcraft.cb.commands.GamemodeCommand;
 import de.lcraft.cb.commands.TPSCommand;
 import de.lcraft.cb.languages.LanguagesManager;
+import de.lcraft.cb.listeners.JoinListener;
 import de.lcraft.cb.permissions.PermissionsManager;
 import de.lcraft.cb.utils.Command;
 import de.lcraft.cb.utils.Config;
 import de.lcraft.cb.utils.Starter;
+import de.lcraft.cb.utils.User;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.*;
 import org.bukkit.event.*;
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class Main extends JavaPlugin {
 
@@ -16,10 +22,12 @@ public class Main extends JavaPlugin {
     private static Config mainCFG;
     private static LanguagesManager langManager;
     private static PermissionsManager permsManager;
+    public static ArrayList<User> users;
 
     public void load() {
         plugin = this;
-        new Starter().startPlugin(mainCFG, plugin);
+        users = new ArrayList<>();
+        mainCFG = new Starter().startPlugin(mainCFG, plugin);
         permsManager = new PermissionsManager(plugin);
         langManager = new LanguagesManager();
     }
@@ -33,8 +41,17 @@ public class Main extends JavaPlugin {
         load();
         plugin = this;
 
+        for(Player p : Bukkit.getOnlinePlayers()) {
+            p.kickPlayer(Config.getOption(mainCFG, "server.reload.msg", "§6Please rejoin").toString());
+        }
+
+        // Register all Listeners
+        registerListener(new JoinListener(plugin));
+
         // Register all Commands
         registerCommand("tps", new TPSCommand(plugin));
+        registerCommand("gm", new GamemodeCommand(plugin));
+        registerCommand("gamemode", new GamemodeCommand(plugin));
 
         Bukkit.broadcastMessage(Starter.ON_START);
     }
@@ -57,7 +74,7 @@ public class Main extends JavaPlugin {
         return plugin;
     }
 
-    public static Config getMainCFG() {
+    public Config getMainCFG() {
         return mainCFG;
     }
 
@@ -71,6 +88,15 @@ public class Main extends JavaPlugin {
             y--;
         }
         return y;
+    }
+
+    public static User getUser(UUID p) {
+        for(User c : users) {
+            if(c != null && c.getUUID() != null && c.getUUID().equals(p)) {
+                return c;
+            }
+        }
+        return null;
     }
 
 }

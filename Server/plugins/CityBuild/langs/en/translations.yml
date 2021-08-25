@@ -2,3 +2,44 @@ id:
   '3524':
     normal: '§aCurrent TPS: §6'
     translate: '§aCurrent TPS: §6'
+  '1561':
+    normal: §cPlease use
+    translate: §cPlease use
+  '331':
+    normal: §cor
+    translate: §cor
+  '11682':
+    normal: §aYour gamemode has changed to §6Creative
+    translate: §aYour gamemode has changed to §6Creative
+  '11974':
+    normal: §aYour gamemode has changed to §6Survival
+    translate: §aYour gamemode has changed to §6Survival
+  '12353':
+    normal: §aYour gamemode has changed to §6Adventure
+    translate: §aYour gamemode has changed to §6Adventure
+  '12438':
+    normal: §aYour gamemode has changed to §6Spectator
+    translate: §aYour gamemode has changed to §6Spectator
+  '8295':
+    normal: §cYou must be a player to use that!
+    translate: §cYou must be a player to use that!
+  '91802':
+    normal: §7[§6CityBuild§7] §r§aPlayer §6%PLAYER%s§a gamemode has been changed to
+      §6Survival
+    translate: §7[§6CityBuild§7] §r§aPlayer §6%PLAYER%s§a gamemode has been changed
+      to §6Survival
+  '91510':
+    normal: §7[§6CityBuild§7] §r§aPlayer §6%PLAYER%s§a gamemode has been changed to
+      §6Creative
+    translate: §7[§6CityBuild§7] §r§aPlayer §6%PLAYER%s§a gamemode has been changed
+      to §6Creative
+  '93575':
+    normal: §7[§6CityBuild§7] §r§aPlayer §6%PLAYER%s§a gamemode has been changed to
+      §6Adventure
+    translate: §7[§6CityBuild§7] §r§aPlayer §6%PLAYER%s§a gamemode has been changed
+      to §6Adventure
+  '93660':
+    normal: §7[§6CityBuild§7] §r§aPlayer §6%PLAYER%s§a gamemode has been changed to
+      §6Spectator
+    translate: §7[§6CityBuild§7] §r§aPlayer §6%PLAYER%s§a gamemode has been changed
+      to §6Spectator

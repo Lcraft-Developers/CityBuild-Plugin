@@ -21,7 +21,7 @@ public class TPSCommand extends Command {
         if(args.length == 0) {
             boolean hasPermissions = true;
             if(s instanceof Player) {
-                hasPermissions = hasPermissions((Player) s, "citybuild.commands.tps", "citybuild.commands.admin", "citybuild.admin");
+                hasPermissions = hasPermissions((Player) s, "cb.commands.tps", "cb.commands.admin", "cb.admin");
             }
 
             if(hasPermissions) {
@@ -31,7 +31,11 @@ public class TPSCommand extends Command {
                     s.sendMessage(PREFIX + LanguagesManager.translate("§aCurrent TPS: §6", LanguagesManager.getNormalLanguage()) + TPS.getTPS());
                 }
             } else {
-                s.sendMessage(NO_PERMISSIONS);
+                if(s instanceof Player) {
+                    s.sendMessage(NO_PERMISSIONS(((Player) s).getUniqueId()));
+                } else {
+                    s.sendMessage(NO_PERMISSIONS);
+                }
             }
         } else {
             if(s instanceof Player) {

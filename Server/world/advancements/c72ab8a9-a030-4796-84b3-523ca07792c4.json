@@ -1,0 +1,9 @@
+{
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:river": "2021-08-25 14:54:46 +0200"
+    },
+    "done": false
+  },
+  "DataVersion": 2730
+}

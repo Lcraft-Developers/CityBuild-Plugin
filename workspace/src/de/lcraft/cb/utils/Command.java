@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class Command extends Starter implements CommandExecutor, Listener, TabCompleter {
 	
@@ -56,6 +57,26 @@ public abstract class Command extends Starter implements CommandExecutor, Listen
 			return end;
 		}
 		return end;
+	}
+
+	public String NO_PERMISSIONS(UUID p) {
+		if(p == null) {
+			return LanguagesManager.translate(NO_PERMISSIONS, LanguagesManager.getNormalLanguage());
+		} else {
+			return LanguagesManager.translate(NO_PERMISSIONS, p);
+		}
+	}
+
+	public String NO_PLAYER(UUID p) {
+		if(p == null) {
+			return LanguagesManager.translate(NO_PLAYER, LanguagesManager.getNormalLanguage());
+		} else {
+			return LanguagesManager.translate(NO_PLAYER, p);
+		}
+	}
+
+	public String translate(Player p, String msg) {
+		return LanguagesManager.translate(msg, p.getUniqueId());
 	}
 
 	public String getHelpMessage(Player p, String... help) {

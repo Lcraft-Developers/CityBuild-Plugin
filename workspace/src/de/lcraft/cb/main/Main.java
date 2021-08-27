@@ -1,13 +1,12 @@
 package de.lcraft.cb.main;
 
-import de.lcraft.cb.commands.GamemodeCommand;
-import de.lcraft.cb.commands.SetSpawnCommand;
-import de.lcraft.cb.commands.SpawnCommand;
-import de.lcraft.cb.commands.TPSCommand;
+import de.lcraft.cb.commands.CommandManager;
+import de.lcraft.cb.commands.impl.*;
 import de.lcraft.cb.languages.LanguagesManager;
 import de.lcraft.cb.listeners.JoinListener;
 import de.lcraft.cb.permissions.PermissionsManager;
 import de.lcraft.cb.utils.*;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.*;
@@ -22,13 +21,17 @@ public class Main extends JavaPlugin {
     private static LanguagesManager langManager;
     private static PermissionsManager permsManager;
     public static ArrayList<User> users;
+    private static CommandManager commandManager;
+    private static Starter starter;
 
-    public void load() {
+    public synchronized void load() throws InterruptedException {
         plugin = this;
         users = new ArrayList<>();
-        mainCFG = new Starter().startPlugin(mainCFG, plugin);
+        starter = new Starter();
+        mainCFG = starter.startPlugin(mainCFG, plugin);
         permsManager = new PermissionsManager(plugin);
         langManager = new LanguagesManager();
+        commandManager = new CommandManager(plugin);
     }
 
     public static LanguagesManager getLangManager() {
@@ -36,30 +39,39 @@ public class Main extends JavaPlugin {
     }
 
     @Override
-    public void onEnable() {
-        load();
+    public synchronized void onEnable() {
         plugin = this;
+        try {
+            load();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Register all Commands
+        commandManager.registerCommand("tps", new TPSCommand(plugin));
+        commandManager.registerCommand("gm", new GamemodeCommand(plugin));
+        commandManager.registerCommand("gamemode", new GamemodeCommand(plugin));
+        commandManager.registerCommand("spawn", new SpawnCommand(plugin));
+        commandManager.registerCommand("setspawn", new SetSpawnCommand(plugin));
+        commandManager.registerCommand("night", new NightCommand(plugin));
+        commandManager.registerCommand("help", new HelpCommand(plugin));
 
         for(Player p : Bukkit.getOnlinePlayers()) {
             p.kickPlayer(Config.getOption(mainCFG, "server.reload.msg", "§6Please rejoin").toString());
         }
 
-        if(Internet.SpigotMc.isOutdated(95641, "1.0.2")) {
+        if(Internet.SpigotMc.isOutdated(95641, "1.0.3")) {
             Internet.SpigotMc.getLatestVersion(95641, version -> {
                 Bukkit.broadcastMessage(Starter.PREFIX + LanguagesManager.translate("§cPlease update. New Version: %NEW%, Current Version: %OLD%", LanguagesManager.getNormalLanguage())
-                        .replace("%NEW%", version).replace("%OLD%", "1.0.2"));
+                        .replace("%NEW%", version).replace("%OLD%", "1.0.3"));
             });
         }
 
         // Register all Listeners
         registerListener(new JoinListener(plugin));
 
-        // Register all Commands
-        registerCommand("tps", new TPSCommand(plugin));
-        registerCommand("gm", new GamemodeCommand(plugin));
-        registerCommand("gamemode", new GamemodeCommand(plugin));
-        registerCommand("spawn", new SpawnCommand(plugin));
-        registerCommand("setspawn", new SetSpawnCommand(plugin));
+        // Init the Starter
+        starter.init(plugin);
 
         Bukkit.broadcastMessage(Starter.ON_START);
     }
@@ -105,6 +117,10 @@ public class Main extends JavaPlugin {
             }
         }
         return null;
+    }
+
+    public static CommandManager getCommandManager() {
+        return commandManager;
     }
 
 }

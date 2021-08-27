@@ -3,26 +3,30 @@ package de.lcraft.cb.utils;
 import de.lcraft.cb.languages.Language;
 import de.lcraft.cb.languages.LanguagesManager;
 import de.lcraft.cb.main.Main;
+import de.lcraft.cb.manager.TabCompleterManager;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class Command extends Starter implements CommandExecutor, Listener, TabCompleter {
+public abstract class Command extends Starter implements CommandExecutor, Listener {
 	
 	protected static Main plugin;
+	private static TabCompleterManager tabCompleterManager;
 
 	public Command(Main plugin) {
 		this.plugin = plugin;
 		plugin.registerListener(this);
+		tabCompleterManager = new TabCompleterManager(plugin);
 	}
 	
 	public abstract boolean run(CommandSender s, org.bukkit.command.Command cmd, String label, String[] args);
+	public abstract ArrayList<String> allPermissions(ArrayList<String> allPerms);
+	public abstract ArrayList<String> allLanguages(ArrayList<String> allLang);
 	
 	@Override
 	public boolean onCommand(CommandSender arg0, org.bukkit.command.Command arg1, String arg2, String[] arg3) {
@@ -43,8 +47,8 @@ public abstract class Command extends Starter implements CommandExecutor, Listen
 		return a;
 	}
 
-	public de.lcraft.cb.utils.TabCompleter addTabComplete(String commandSlah, String[] beforeArgs, ArrayList<String> possebilitis) {
-		return new de.lcraft.cb.utils.TabCompleter(plugin, commandSlah, beforeArgs, possebilitis);
+	public void addTabComplete(String[] beforeArgs, ArrayList<String> possebilitis) {
+		tabCompleterManager.addNewArg(beforeArgs, possebilitis);
 	}
 
 	public String getHelpMessage(Language lang, String... help) {
@@ -67,6 +71,14 @@ public abstract class Command extends Starter implements CommandExecutor, Listen
 		}
 	}
 
+	public String NO_WORLD(UUID p) {
+		if(p == null) {
+			return LanguagesManager.translate(WORLD_NOT_FOUND, LanguagesManager.getNormalLanguage());
+		} else {
+			return LanguagesManager.translate(WORLD_NOT_FOUND, p);
+		}
+	}
+
 	public String NO_PLAYER(UUID p) {
 		if(p == null) {
 			return LanguagesManager.translate(NO_PLAYER, LanguagesManager.getNormalLanguage());
@@ -76,7 +88,11 @@ public abstract class Command extends Starter implements CommandExecutor, Listen
 	}
 
 	public String translate(Player p, String msg) {
-		return LanguagesManager.translate(msg, p.getUniqueId());
+		if(p != null) {
+			return LanguagesManager.translate(msg, p.getUniqueId());
+		} else {
+			return LanguagesManager.translate(msg, LanguagesManager.getNormalLanguage());
+		}
 	}
 
 	public String getHelpMessage(Player p, String... help) {
@@ -87,8 +103,8 @@ public abstract class Command extends Starter implements CommandExecutor, Listen
 		return getHelpMessage(LanguagesManager.getNormalLanguage(), help);
 	}
 
-	@Override
-	public List<String> onTabComplete(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
-		return null;
+	public TabCompleterManager getTabCompleterManager() {
+		return tabCompleterManager;
 	}
+
 }

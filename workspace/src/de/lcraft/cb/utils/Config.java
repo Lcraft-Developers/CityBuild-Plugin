@@ -164,6 +164,13 @@ public class Config {
     public Location getLocation(String root) {
         if(!root.endsWith(".")) root = root + ".";
 
+        if(!cfg.contains(root + "world")) return null;
+        if(!cfg.contains(root + "x")) return null;
+        if(!cfg.contains(root + "y")) return null;
+        if(!cfg.contains(root + "z")) return null;
+        if(!cfg.contains(root + "yaw")) return null;
+        if(!cfg.contains(root + "pitch")) return null;
+
         World w = Bukkit.getWorld(cfg.getString(root + "world"));
         double x = cfg.getInt(root + "x");
         double y = cfg.getInt(root + "y");

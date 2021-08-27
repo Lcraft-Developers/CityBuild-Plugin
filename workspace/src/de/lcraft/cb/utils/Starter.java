@@ -1,5 +1,10 @@
 package de.lcraft.cb.utils;
 
+import de.lcraft.cb.commands.CommandManager;
+import de.lcraft.cb.languages.Language;
+import de.lcraft.cb.languages.LanguagesManager;
+import de.lcraft.cb.main.Main;
+import de.lcraft.cb.permissions.PermissionsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import net.md_5.bungee.api.ChatMessageType;
@@ -17,22 +22,24 @@ public class Starter {
             ON_LOAD = PREFIX + "§aThe Plugin is loaded.",
             ON_START = PREFIX + "§aThe Plugin is started.",
             ON_STOP = PREFIX + "§aThe Plugin is stopped.",
-            NO_PLAYER_FOUND = "§cThis Player doesn't exists!";
+            NO_PLAYER_FOUND = "§cThis Player doesn't exists!",
+            WORLD_NOT_FOUND = "§cThis World doesn't exists!";
 
     public Config startPlugin(Config mainCFG, JavaPlugin plugin) {
         try {
             mainCFG = new Config("config.yml");
-            PREFIX = (String) Config.getOption(mainCFG, "challenges.PREFIX", PREFIX);
-            START_PREFIX = (String) Config.getOption(mainCFG, "challenges.START_PREFIX", START_PREFIX);
-            NO_PERMISSIONS = (String) Config.getOption(mainCFG, "challenges.NO_PERMISSIONS", NO_PERMISSIONS);
-            NO_PLAYER = (String) Config.getOption(mainCFG, "challenges.NO_PLAYER", NO_PLAYER);
-            NO_COMMAND_FOUND = (String) Config.getOption(mainCFG, "challenges.NO_COMMAND_FOUND", NO_COMMAND_FOUND);
-            NO_NUMBER = (String) Config.getOption(mainCFG, "challenges.NO_NUMBER", NO_NUMBER);
-            NO_PLAYER_FOUND = (String) Config.getOption(mainCFG, "challenges.NO_PLAYER_FOUND", NO_PLAYER_FOUND);
+            PREFIX = (String) Config.getOption(mainCFG, "cb.PREFIX", PREFIX);
+            START_PREFIX = (String) Config.getOption(mainCFG, "cb.START_PREFIX", START_PREFIX);
+            NO_PERMISSIONS = (String) Config.getOption(mainCFG, "cb.NO_PERMISSIONS", NO_PERMISSIONS);
+            NO_PLAYER = (String) Config.getOption(mainCFG, "cb.NO_PLAYER", NO_PLAYER);
+            NO_COMMAND_FOUND = (String) Config.getOption(mainCFG, "cb.NO_COMMAND_FOUND", NO_COMMAND_FOUND);
+            NO_NUMBER = (String) Config.getOption(mainCFG, "cb.NO_NUMBER", NO_NUMBER);
+            NO_PLAYER_FOUND = (String) Config.getOption(mainCFG, "cb.NO_PLAYER_FOUND", NO_PLAYER_FOUND);
+            WORLD_NOT_FOUND = (String) Config.getOption(mainCFG, "cb.WORLD_NOT_FOUND", WORLD_NOT_FOUND);
 
-            ON_LOAD = (String) Config.getOption(mainCFG, "challenges.ON_LOAD", ON_LOAD);
-            ON_START = (String) Config.getOption(mainCFG, "challenges.ON_START", ON_START);
-            ON_STOP = (String) Config.getOption(mainCFG, "challenges.ON_STOP", ON_STOP);
+            ON_LOAD = (String) Config.getOption(mainCFG, "cb.ON_LOAD", ON_LOAD);
+            ON_START = (String) Config.getOption(mainCFG, "cb.ON_START", ON_START);
+            ON_STOP = (String) Config.getOption(mainCFG, "cb.ON_STOP", ON_STOP);
 
             Bukkit.broadcastMessage(ON_LOAD);
             return mainCFG;
@@ -41,6 +48,23 @@ public class Starter {
             Bukkit.broadcastMessage("§cERRRRRROR!!!");
         }
         return null;
+    }
+
+    public void init(Main plugin) {
+        if(plugin.getCommandManager().docAllPermissions() != null) {
+            for(String c : plugin.getCommandManager().docAllPermissions()) {
+                PermissionsManager.Permission perm = new PermissionsManager.Permission();
+                perm.load(c, plugin.getPermsManager().getAllPermissionsCfg());
+            }
+        }
+        if(plugin.getCommandManager().docAllTranslations() != null) {
+            for(String c : plugin.getCommandManager().docAllTranslations()) {
+                for(String LStr : LanguagesManager.langs.keySet()) {
+                    Language lang = LanguagesManager.langs.get(LStr);
+                    LanguagesManager.translate(c, lang);
+                }
+            }
+        }
     }
 
     public static void sendActionBar(Player p, String msg){

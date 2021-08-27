@@ -54,12 +54,15 @@ public class PermissionsManager {
         }
         adminsCfg.save();
         allPermissionsCfg.cfg().set("permissions." + permission + ".name", permission);
+        allPermissionsCfg.save();
         boolean activated;
         if(!allPermissionsCfg.cfg().contains("permissions." + permission + ".enabled")) {
             allPermissionsCfg.cfg().set("permissions." + permission + ".enabled", true);
+            allPermissionsCfg.save();
             activated = true;
         } else {
             activated = allPermissionsCfg.cfg().getBoolean("permissions." + permission + ".enabled");
+            allPermissionsCfg.save();
         }
         allPermissionsCfg.save();
 
@@ -82,9 +85,13 @@ public class PermissionsManager {
         root = "";
         for(String c : permission.split(".")) {
             root = root + c + ".";
-            allPermissionsCfg.cfg().set("permissions." + root + ".name", root);
+            allPermissionsCfg.cfg().set("permissions." + root + ".name", root + "*");
+            allPermissionsCfg.cfg().set("permissions." + root + ".name", root + "admin");
             allPermissionsCfg.save();
             if(p.hasPermission(root + "*")) {
+                return true;
+            }
+            if(p.hasPermission(root + "admin")) {
                 return true;
             }
         }

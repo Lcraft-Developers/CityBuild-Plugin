@@ -7,10 +7,7 @@ import de.lcraft.cb.commands.TPSCommand;
 import de.lcraft.cb.languages.LanguagesManager;
 import de.lcraft.cb.listeners.JoinListener;
 import de.lcraft.cb.permissions.PermissionsManager;
-import de.lcraft.cb.utils.Command;
-import de.lcraft.cb.utils.Config;
-import de.lcraft.cb.utils.Starter;
-import de.lcraft.cb.utils.User;
+import de.lcraft.cb.utils.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.*;
@@ -45,6 +42,13 @@ public class Main extends JavaPlugin {
 
         for(Player p : Bukkit.getOnlinePlayers()) {
             p.kickPlayer(Config.getOption(mainCFG, "server.reload.msg", "§6Please rejoin").toString());
+        }
+
+        if(Internet.SpigotMc.isOutdated(95641, "1.0.2")) {
+            Internet.SpigotMc.getLatestVersion(95641, version -> {
+                Bukkit.broadcastMessage(Starter.PREFIX + LanguagesManager.translate("§cPlease update. New Version: %NEW%, Current Version: %OLD%", LanguagesManager.getNormalLanguage())
+                        .replace("%NEW%", version).replace("%OLD%", "1.0.2"));
+            });
         }
 
         // Register all Listeners

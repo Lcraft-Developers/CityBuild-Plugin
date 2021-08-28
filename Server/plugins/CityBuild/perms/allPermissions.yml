@@ -35,6 +35,28 @@ permissions:
           name: cb.commands.night.world
           enabled: true
           opCanIt: true
+      day:
+        worlds:
+          player:
+            name: cb.commands.day.worlds.player
+            enabled: true
+            opCanIt: true
+          other:
+            name: cb.commands.day.worlds.other
+            enabled: true
+            opCanIt: true
+          all:
+            name: cb.commands.day.worlds.all
+            enabled: true
+            opCanIt: true
+          own:
+            name: cb.commands.day.worlds.own
+            enabled: true
+            opCanIt: true
+        world:
+          name: cb.commands.day.world
+          enabled: true
+          opCanIt: true
     admin:
       name: cb.admin
       enabled: true

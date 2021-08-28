@@ -17,5 +17,8 @@ server:
   leave:
     msg:
       enabled: false
+  reload:
+    msg: §6Please rejoin
 time:
   night: '18000'
+  day: '6000'

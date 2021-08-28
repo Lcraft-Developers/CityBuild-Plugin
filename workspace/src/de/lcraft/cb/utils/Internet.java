@@ -2,6 +2,8 @@ package de.lcraft.cb.utils;
 
 import de.lcraft.cb.exceptions.InternetNotFoundException;
 import de.lcraft.cb.exceptions.VersionNotFoundException;
+import de.lcraft.cb.main.Main;
+import org.bukkit.Bukkit;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -65,37 +67,38 @@ public class Internet {
         private static boolean isOutdated = true,
                 isUpdated = false;
 
-        public static boolean isOutdated(int recourcesID, String currentVersion) {
+        public static boolean isOutdated(int recourcesID, String currentVersion, Main plugin) {
             getLatestVersion(recourcesID, version -> {
                 if(currentVersion.equals(version)) {
                     isOutdated = false;
                 } else {
                     isOutdated = true;
                 }
-            });
+            }, plugin);
             return isOutdated;
         }
 
-        public static boolean isUpdated(int recourcesID, String currentVersion) {
+        public static boolean isUpdated(int recourcesID, String currentVersion, Main plugin) {
             getLatestVersion(recourcesID, version -> {
                 if(currentVersion.equals(version)) {
                     isUpdated = true;
                 } else {
                     isUpdated = false;
                 }
-            });
+            }, plugin);
             return isUpdated;
         }
 
-        public static void getLatestVersion(int recourcesID, Consumer<String> consumer) {
-            try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + recourcesID).openStream();
-                 Scanner scanner = new Scanner(inputStream)) {
-                if (scanner.hasNext()) {
-                    consumer.accept(scanner.next());
+        public static void getLatestVersion(int resourceId, Consumer<String> consumer, Main plugin) {
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+                try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + resourceId).openStream(); Scanner scanner = new Scanner(inputStream)) {
+                    if (scanner.hasNext()) {
+                        consumer.accept(scanner.next());
+                    }
+                } catch (IOException exception) {
+                    plugin.getLogger().info("Cannot look for updates: " + exception.getMessage());
                 }
-            } catch (IOException exception) {
-                new VersionNotFoundException(recourcesID).printStackTrace();
-            }
+            });
         }
 
     }

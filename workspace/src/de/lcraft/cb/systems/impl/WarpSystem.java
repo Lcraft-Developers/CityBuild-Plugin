@@ -1,10 +1,11 @@
-package de.lcraft.cb.manager;
+package de.lcraft.cb.systems.impl;
 
+import de.lcraft.cb.systems.System;
 import de.lcraft.cb.utils.Config;
 import org.bukkit.Location;
 import java.util.ArrayList;
 
-public class WarpSystem {
+public class WarpSystem extends System {
 
     private Config warps;
 
@@ -58,6 +59,16 @@ public class WarpSystem {
             }
         }
         return all;
+    }
+
+    @Override
+    public ArrayList<String> allPermissions(ArrayList<String> allPerms) {
+        return allPerms;
+    }
+
+    @Override
+    public ArrayList<String> allLanguages(ArrayList<String> allLang) {
+        return allLang;
     }
 
     public class Warp {

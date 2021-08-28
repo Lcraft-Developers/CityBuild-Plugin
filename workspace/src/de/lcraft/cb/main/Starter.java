@@ -1,10 +1,9 @@
-package de.lcraft.cb.utils;
+package de.lcraft.cb.main;
 
-import de.lcraft.cb.commands.CommandManager;
 import de.lcraft.cb.languages.Language;
 import de.lcraft.cb.languages.LanguagesManager;
-import de.lcraft.cb.main.Main;
 import de.lcraft.cb.permissions.PermissionsManager;
+import de.lcraft.cb.utils.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import net.md_5.bungee.api.ChatMessageType;
@@ -59,6 +58,20 @@ public class Starter {
         }
         if(plugin.getCommandManager().docAllTranslations() != null) {
             for(String c : plugin.getCommandManager().docAllTranslations()) {
+                for(String LStr : LanguagesManager.langs.keySet()) {
+                    Language lang = LanguagesManager.langs.get(LStr);
+                    LanguagesManager.translate(c, lang);
+                }
+            }
+        }
+        if(plugin.getSysManager().docAllPermissions() != null) {
+            for(String c : plugin.getSysManager().docAllPermissions()) {
+                PermissionsManager.Permission perm = new PermissionsManager.Permission();
+                perm.load(c, plugin.getPermsManager().getAllPermissionsCfg());
+            }
+        }
+        if(plugin.getSysManager().docAllTranslations() != null) {
+            for(String c : plugin.getSysManager().docAllTranslations()) {
                 for(String LStr : LanguagesManager.langs.keySet()) {
                     Language lang = LanguagesManager.langs.get(LStr);
                     LanguagesManager.translate(c, lang);

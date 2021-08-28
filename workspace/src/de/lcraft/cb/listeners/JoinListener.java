@@ -24,7 +24,7 @@ public class JoinListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         boolean isMsg = (boolean) Config.getOption(plugin.getMainCFG(), "server.join.msg.enabled", true);
-        Main.users.add(new User(e.getPlayer().getUniqueId()));
+        Main.getPlugin().users.add(new User(e.getPlayer().getUniqueId()));
         e.setJoinMessage("");
         if(isMsg) {
             for(Player p : Bukkit.getOnlinePlayers()) {
@@ -36,7 +36,7 @@ public class JoinListener implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         boolean isMsg = (boolean) Config.getOption(plugin.getMainCFG(), "server.leave.msg.enabled", false);
-        Main.users.remove(Main.getUser(e.getPlayer().getUniqueId()));
+        Main.getPlugin().users.remove(Main.getPlugin().getUser(e.getPlayer().getUniqueId()));
         e.setQuitMessage("");
 
         if(isMsg) {

@@ -29,7 +29,7 @@ public class GamemodeCommand extends Command {
         before.add("creative");
         before.add("adventure");
         before.add("spectator");
-        for(User p : Main.users) {
+        for(User p : Main.getPlugin().users) {
             if(p.getPlayer() != null) {
                 before.add(p.getPlayer().getName());
             }
@@ -37,7 +37,7 @@ public class GamemodeCommand extends Command {
         addTabComplete(new String[]{}, before);
 
         // /gamemode [Player] Gamemode
-        for(User p : Main.users) {
+        for(User p : Main.getPlugin().users) {
             before = new ArrayList<>();
             if(p.getPlayer() != null) {
                 String[] a = new String[1];
@@ -58,7 +58,7 @@ public class GamemodeCommand extends Command {
             String cS = args[0];
             Player cU = Bukkit.getPlayer(cS);
             if(cU != null) {
-                User c = Main.getUser(cU.getUniqueId());
+                User c = Main.getPlugin().getUser(cU.getUniqueId());
                 String gm = args[1];
                 boolean hasPermissions = false;
                 if(s instanceof Player) {
@@ -77,60 +77,60 @@ public class GamemodeCommand extends Command {
                             if(hasPermissions((Player)s, "cb.admin", "cb.*") || hasPermissions((Player)s, "cb.gamemode.other.*") || hasPermissions((Player)s, "cb.gamemode.other.0") ||
                             hasPermissions((Player)s, "cb.gamemode.admin", "cb.gamemode.*") || hasPermissions((Player) s, "cb.gamemode.*")) {
                                 c.setGamemode("0");
-                                cU.sendMessage(PREFIX + translate(cU, "§aYour gamemode has changed to §6Survival"));
-                                s.sendMessage(translate((Player)s, PREFIX + "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Survival").replace("%PLAYER%", cU.getName()));
+                                cU.sendMessage(translate(cU, "§aYour gamemode has changed to §6Survival"));
+                                s.sendMessage(translate((Player)s, "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Survival").replace("%PLAYER%", cU.getName()));
                             } else {
                                 s.sendMessage(NO_PERMISSIONS(((Player) s).getUniqueId()));
                             }
                         } else {
                             c.setGamemode("0");
-                            cU.sendMessage(PREFIX + translate(cU, "§aYour gamemode has changed to §6Survival"));
-                            s.sendMessage(translate(null, PREFIX + "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Survival").replace("%PLAYER%", cU.getName()));
+                            cU.sendMessage(translate(cU, "§aYour gamemode has changed to §6Survival"));
+                            s.sendMessage(translate(null, "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Survival").replace("%PLAYER%", cU.getName()));
                         }
                     } else if(gm.equalsIgnoreCase("1") || args[0].equalsIgnoreCase("creative")) {
                         if(s instanceof Player) {
                             if(hasPermissions((Player)s, "cb.admin", "cb.*") || hasPermissions((Player)s, "cb.gamemode.other.*") || hasPermissions((Player)s, "cb.gamemode.other.1") ||
                                     hasPermissions((Player)s, "cb.gamemode.admin", "cb.gamemode.*") || hasPermissions((Player) s, "cb.gamemode.*")) {
                                 c.setGamemode("1");
-                                cU.sendMessage(PREFIX + translate(cU, "§aYour gamemode has changed to §6Creative"));
-                                s.sendMessage(translate((Player)s, PREFIX + "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Creative").replace("%PLAYER%", cU.getName()));
+                                cU.sendMessage(translate(cU, "§aYour gamemode has changed to §6Creative"));
+                                s.sendMessage(translate((Player)s, "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Creative").replace("%PLAYER%", cU.getName()));
                             } else {
                                 s.sendMessage(NO_PERMISSIONS(((Player) s).getUniqueId()));
                             }
                         } else {
                             c.setGamemode("0");
-                            cU.sendMessage(PREFIX + translate(cU, "§aYour gamemode has changed to §6Creative"));
-                            s.sendMessage(translate(null, PREFIX + "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Creative").replace("%PLAYER%", cU.getName()));
+                            cU.sendMessage(translate(cU, "§aYour gamemode has changed to §6Creative"));
+                            s.sendMessage(translate(null, "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Creative").replace("%PLAYER%", cU.getName()));
                         }
                     } else if(gm.equalsIgnoreCase("2") || args[0].equalsIgnoreCase("adventure")) {
                         if(s instanceof Player) {
                             if(hasPermissions((Player)s, "cb.admin", "cb.*") || hasPermissions((Player)s, "cb.gamemode.other.*") || hasPermissions((Player)s, "cb.gamemode.other.2") ||
                                     hasPermissions((Player)s, "cb.gamemode.admin", "cb.gamemode.*") || hasPermissions((Player) s, "cb.gamemode.*")) {
                                 c.setGamemode("2");
-                                cU.sendMessage(PREFIX + translate(cU, "§aYour gamemode has changed to §6Adventure"));
-                                s.sendMessage(translate((Player)s, PREFIX + "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Adventure").replace("%PLAYER%", cU.getName()));
+                                cU.sendMessage(translate(cU, "§aYour gamemode has changed to §6Adventure"));
+                                s.sendMessage(translate((Player)s, "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Adventure").replace("%PLAYER%", cU.getName()));
                             } else {
                                 s.sendMessage(NO_PERMISSIONS(((Player) s).getUniqueId()));
                             }
                         } else {
                             c.setGamemode("2");
-                            cU.sendMessage(PREFIX + translate(cU, "§aYour gamemode has changed to §6Adventure"));
-                            s.sendMessage(translate(null, PREFIX + "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Adventure").replace("%PLAYER%", cU.getName()));
+                            cU.sendMessage(translate(cU, "§aYour gamemode has changed to §6Adventure"));
+                            s.sendMessage(translate(null, "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Adventure").replace("%PLAYER%", cU.getName()));
                         }
                     } else if(gm.equalsIgnoreCase("3") || args[0].equalsIgnoreCase("spectator")) {
                         if(s instanceof Player) {
                             if(hasPermissions((Player)s, "cb.admin, \"cb.*\"") || hasPermissions((Player)s, "cb.gamemode.other.*") || hasPermissions((Player)s, "cb.gamemode.other.0") ||
                                     hasPermissions(null, "cb.gamemode.admin", "cb.gamemode.*") || hasPermissions((Player) s, "cb.gamemode.*")) {
                                 c.setGamemode("3");
-                                cU.sendMessage(PREFIX + translate(cU, "§aYour gamemode has changed to §6Spectator"));
-                                s.sendMessage(translate((Player)s, PREFIX + "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Spectator").replace("%PLAYER%", cU.getName()));
+                                cU.sendMessage(translate(cU, "§aYour gamemode has changed to §6Spectator"));
+                                s.sendMessage(translate((Player)s, "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Spectator").replace("%PLAYER%", cU.getName()));
                             } else {
                                 s.sendMessage(NO_PERMISSIONS(((Player) s).getUniqueId()));
                             }
                         } else {
                             c.setGamemode("3");
-                            cU.sendMessage(PREFIX + translate(cU, "§aYour gamemode has changed to §6Spectator"));
-                            s.sendMessage(translate(null, PREFIX + "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Speactator").replace("%PLAYER%", cU.getName()));
+                            cU.sendMessage(translate(cU, "§aYour gamemode has changed to §6Spectator"));
+                            s.sendMessage(translate(null, "§aPlayer §6%PLAYER%s§a gamemode has been changed to §6Speactator").replace("%PLAYER%", cU.getName()));
                         }
                     } else {
                         s.sendMessage(getHelpMessage("gm [Player] [0, 1, 2, 3]", "gm [Player] [survival, creative, adventure, spectator]", "gamemode [Player] [0, 1, 2, 3]", "gamemode [Player] [survival, creative, adventure, spectator]"));
@@ -144,34 +144,34 @@ public class GamemodeCommand extends Command {
         } else if(args.length == 1) {
             if(s instanceof Player) {
                 Player p = (Player) s;
-                User u = Main.getUser(p.getUniqueId());
+                User u = Main.getPlugin().getUser(p.getUniqueId());
                 if(hasPermissions(p, "cb.gamemode.self", "cb.gamemode.self.*", "cb.gamemode.self.0", "cb.gamemode.self.1", "cb.gamemode.self.2", "cb.gamemode.self.3") ||
                         hasPermissions(p, "cb.gamemode.admin", "cb.gamemode.*", "cb.admin", "cb.*")) {
                     if(args[0].equalsIgnoreCase("0") || args[0].equalsIgnoreCase("survival")) {
                         if(hasPermissions(p, "cb.admin", "cb.*", "cb.gamemode.self.*", "cb.gamemode.self.0", "cb.gamemode.admin", "cb.gamemode.*")) {
                             u.setGamemode("0");
-                            p.sendMessage(PREFIX + translate(p, "§aYour gamemode has changed to §6Survival"));
+                            p.sendMessage(translate(p, "§aYour gamemode has changed to §6Survival"));
                         } else {
                             p.sendMessage(NO_PERMISSIONS(p.getUniqueId()));
                         }
                     } else if(args[0].equalsIgnoreCase("1") || args[0].equalsIgnoreCase("creative")) {
                         if(hasPermissions(p, "cb.admin", "cb.*", "cb.gamemode.self.*", "cb.gamemode.self.1", "cb.gamemode.admin", "cb.gamemode.*")) {
                             u.setGamemode("1");
-                            p.sendMessage(PREFIX + translate(p, "§aYour gamemode has changed to §6Creative"));
+                            p.sendMessage(translate(p, "§aYour gamemode has changed to §6Creative"));
                         } else {
                             p.sendMessage(NO_PERMISSIONS(p.getUniqueId()));
                         }
                     } else if(args[0].equalsIgnoreCase("2") || args[0].equalsIgnoreCase("adventure")) {
                         if(hasPermissions(p, "cb.admin", "cb.*", "cb.gamemode.self.*", "cb.gamemode.self.2", "cb.gamemode.admin", "cb.gamemode.*")) {
                             u.setGamemode("2");
-                            p.sendMessage(PREFIX + translate(p, "§aYour gamemode has changed to §6Adventure"));
+                            p.sendMessage(translate(p, "§aYour gamemode has changed to §6Adventure"));
                         } else {
                             p.sendMessage(NO_PERMISSIONS(p.getUniqueId()));
                         }
                     } else if(args[0].equalsIgnoreCase("3") || args[0].equalsIgnoreCase("spectator")) {
                         if(hasPermissions(p, "cb.admin", "cb.*", "cb.gamemode.self.*", "cb.gamemode.self.3", "cb.gamemode.admin", "cb.gamemode.*")) {
                             u.setGamemode("3");
-                            p.sendMessage(PREFIX + translate(p, "§aYour gamemode has changed to §6Spectator"));
+                            p.sendMessage(translate(p, "§aYour gamemode has changed to §6Spectator"));
                         } else {
                             p.sendMessage(NO_PERMISSIONS(p.getUniqueId()));
                         }

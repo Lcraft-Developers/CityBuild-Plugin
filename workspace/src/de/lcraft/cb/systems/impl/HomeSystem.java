@@ -1,12 +1,13 @@
-package de.lcraft.cb.manager;
+package de.lcraft.cb.systems.impl;
 
 import de.lcraft.cb.main.Main;
+import de.lcraft.cb.systems.System;
 import de.lcraft.cb.utils.Config;
 import org.bukkit.Location;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class HomeSystem {
+public class HomeSystem extends System {
 
     private Main plugin;
     private Config homes;
@@ -68,6 +69,16 @@ public class HomeSystem {
             }
         }
         return home;
+    }
+
+    @Override
+    public ArrayList<String> allPermissions(ArrayList<String> allPerms) {
+        return allPerms;
+    }
+
+    @Override
+    public ArrayList<String> allLanguages(ArrayList<String> allLang) {
+        return allLang;
     }
 
     public class Home {

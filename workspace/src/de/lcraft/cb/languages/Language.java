@@ -49,10 +49,12 @@ public abstract class Language {
             }
             return help;
         }
-        String[] help = new String[1];
+        String[] help = new String[2];
         help[0] = "§6Thats not configurated yet";
+        help[1] = "§6Thats the 2. Message";
 
         cfg.cfg().set("config.help.0", help[0]);
+        cfg.cfg().set("config.help.1", help[1]);
         cfg.save();
 
         return help;

@@ -76,3 +76,8 @@ id:
       [World] §cor §6/night [Player] §c!
     translate: §7[§6CityBuild§7] §r§cPlease use §6/night §cor §6/night all §cor §6/night
       [World] §cor §6/night [Player] §c!
+  '130696':
+    normal: §7[§6CityBuild§7] §r§cPlease use §6/day §cor §6/day all §cor §6/day [World]
+      §cor §6/day [Player] §c!
+    translate: §7[§6CityBuild§7] §r§cPlease use §6/day §cor §6/day all §cor §6/day
+      [World] §cor §6/day [Player] §c!

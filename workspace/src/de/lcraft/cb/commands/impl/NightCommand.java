@@ -1,10 +1,8 @@
 package de.lcraft.cb.commands.impl;
 
-import de.lcraft.cb.languages.Language;
 import de.lcraft.cb.main.Main;
 import de.lcraft.cb.utils.Command;
 import de.lcraft.cb.utils.Config;
-import de.lcraft.cb.utils.Starter;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -29,7 +27,7 @@ public class NightCommand extends Command {
             perms = true;
         }
 
-        int time = Integer.valueOf(Config.getOption(plugin.getMainCFG(), "time.night", "18000").toString());
+        int time = Integer.valueOf(Config.getOption(plugin.getMainCFG(), "time.night", "14000").toString());
 
         if(perms) {
             if(args.length == 1) {

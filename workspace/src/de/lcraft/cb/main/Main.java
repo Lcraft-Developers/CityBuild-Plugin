@@ -5,8 +5,8 @@ import de.lcraft.cb.commands.impl.*;
 import de.lcraft.cb.languages.LanguagesManager;
 import de.lcraft.cb.listeners.JoinListener;
 import de.lcraft.cb.permissions.PermissionsManager;
+import de.lcraft.cb.systems.SystemsManager;
 import de.lcraft.cb.utils.*;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.*;
@@ -17,12 +17,13 @@ import java.util.UUID;
 public class Main extends JavaPlugin {
 
     private static Main plugin;
-    private static Config mainCFG;
-    private static LanguagesManager langManager;
-    private static PermissionsManager permsManager;
-    public static ArrayList<User> users;
-    private static CommandManager commandManager;
-    private static Starter starter;
+    private Config mainCFG;
+    private LanguagesManager langManager;
+    private PermissionsManager permsManager;
+    public ArrayList<User> users;
+    private CommandManager commandManager;
+    private Starter starter;
+    private SystemsManager sysManager;
 
     public synchronized void load() throws InterruptedException {
         plugin = this;
@@ -32,9 +33,10 @@ public class Main extends JavaPlugin {
         permsManager = new PermissionsManager(plugin);
         langManager = new LanguagesManager();
         commandManager = new CommandManager(plugin);
+        sysManager = new SystemsManager(plugin);
     }
 
-    public static LanguagesManager getLangManager() {
+    public  LanguagesManager getLangManager() {
         return langManager;
     }
 
@@ -55,16 +57,17 @@ public class Main extends JavaPlugin {
         commandManager.registerCommand("setspawn", new SetSpawnCommand(plugin));
         commandManager.registerCommand("night", new NightCommand(plugin));
         commandManager.registerCommand("help", new HelpCommand(plugin));
+        commandManager.registerCommand("day", new DayCommand(plugin));
 
         for(Player p : Bukkit.getOnlinePlayers()) {
             p.kickPlayer(Config.getOption(mainCFG, "server.reload.msg", "§6Please rejoin").toString());
         }
 
-        if(Internet.SpigotMc.isOutdated(95641, "1.0.3")) {
+        if(Internet.SpigotMc.isOutdated(95641, "1.0.2", plugin)) {
             Internet.SpigotMc.getLatestVersion(95641, version -> {
-                Bukkit.broadcastMessage(Starter.PREFIX + LanguagesManager.translate("§cPlease update. New Version: %NEW%, Current Version: %OLD%", LanguagesManager.getNormalLanguage())
-                        .replace("%NEW%", version).replace("%OLD%", "1.0.3"));
-            });
+                Bukkit.broadcastMessage(starter.PREFIX + LanguagesManager.translate("§cPlease update. New Version: %NEW%, Current Version: %OLD%", LanguagesManager.getNormalLanguage())
+                        .replace("%NEW%", version).replace("%OLD%", "1.0.2"));
+            }, plugin);
         }
 
         // Register all Listeners
@@ -98,11 +101,11 @@ public class Main extends JavaPlugin {
         return mainCFG;
     }
 
-    public static PermissionsManager getPermsManager() {
+    public PermissionsManager getPermsManager() {
         return permsManager;
     }
 
-    public static int getHighestY(Location loc) {
+    public  int getHighestY(Location loc) {
         int y = 255;
         while(new Location(loc.getWorld(), loc.getX(), y, loc.getZ()).getBlock().getType() == Material.AIR) {
             y--;
@@ -110,7 +113,7 @@ public class Main extends JavaPlugin {
         return y;
     }
 
-    public static User getUser(UUID p) {
+    public User getUser(UUID p) {
         for(User c : users) {
             if(c != null && c.getUUID() != null && c.getUUID().equals(p)) {
                 return c;
@@ -119,8 +122,12 @@ public class Main extends JavaPlugin {
         return null;
     }
 
-    public static CommandManager getCommandManager() {
+    public CommandManager getCommandManager() {
         return commandManager;
     }
 
+    public SystemsManager getSysManager() {
+        return sysManager;
+    }
+    
 }

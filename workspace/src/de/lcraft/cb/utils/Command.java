@@ -3,14 +3,13 @@ package de.lcraft.cb.utils;
 import de.lcraft.cb.languages.Language;
 import de.lcraft.cb.languages.LanguagesManager;
 import de.lcraft.cb.main.Main;
+import de.lcraft.cb.main.Starter;
 import de.lcraft.cb.manager.TabCompleterManager;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public abstract class Command extends Starter implements CommandExecutor, Listener {
@@ -34,13 +33,13 @@ public abstract class Command extends Starter implements CommandExecutor, Listen
 	}
 
 	public boolean hasPermissions(Player p, String perm) {
-		return Main.getPermsManager().hasPermissions(p, perm);
+		return Main.getPlugin().getPermsManager().hasPermissions(p, perm);
 	}
 
 	public boolean hasPermissions(Player p, String... perm) {
 		boolean a = false;
 		for(String c : perm) {
-			if(Main.getPermsManager().hasPermissions(p, c)) {
+			if(Main.getPlugin().getPermsManager().hasPermissions(p, c)) {
 				a = true;
 			}
 		}
@@ -65,33 +64,33 @@ public abstract class Command extends Starter implements CommandExecutor, Listen
 
 	public String NO_PERMISSIONS(UUID p) {
 		if(p == null) {
-			return LanguagesManager.translate(NO_PERMISSIONS, LanguagesManager.getNormalLanguage());
+			return PREFIX + LanguagesManager.translate(NO_PERMISSIONS, LanguagesManager.getNormalLanguage());
 		} else {
-			return LanguagesManager.translate(NO_PERMISSIONS, p);
+			return PREFIX + LanguagesManager.translate(NO_PERMISSIONS, p);
 		}
 	}
 
 	public String NO_WORLD(UUID p) {
 		if(p == null) {
-			return LanguagesManager.translate(WORLD_NOT_FOUND, LanguagesManager.getNormalLanguage());
+			return PREFIX + LanguagesManager.translate(WORLD_NOT_FOUND, LanguagesManager.getNormalLanguage());
 		} else {
-			return LanguagesManager.translate(WORLD_NOT_FOUND, p);
+			return PREFIX + LanguagesManager.translate(WORLD_NOT_FOUND, p);
 		}
 	}
 
 	public String NO_PLAYER(UUID p) {
 		if(p == null) {
-			return LanguagesManager.translate(NO_PLAYER, LanguagesManager.getNormalLanguage());
+			return PREFIX + LanguagesManager.translate(NO_PLAYER, LanguagesManager.getNormalLanguage());
 		} else {
-			return LanguagesManager.translate(NO_PLAYER, p);
+			return PREFIX + LanguagesManager.translate(NO_PLAYER, p);
 		}
 	}
 
 	public String translate(Player p, String msg) {
 		if(p != null) {
-			return LanguagesManager.translate(msg, p.getUniqueId());
+			return PREFIX + LanguagesManager.translate(msg, p.getUniqueId());
 		} else {
-			return LanguagesManager.translate(msg, LanguagesManager.getNormalLanguage());
+			return PREFIX + LanguagesManager.translate(msg, LanguagesManager.getNormalLanguage());
 		}
 	}
 

@@ -91,5 +91,13 @@ id:
   '19877':
     normal: §aIn all Worlds the time has been seted to §6%TIME%§a.
     translate: §aIn all Worlds the time has been seted to §6%TIME%§a.
+  '8295':
+    normal: §cYou must be a player to use that!
+    translate: §cYou must be a player to use that!
+  '130696':
+    normal: §7[§6CityBuild§7] §r§cPlease use §6/day §cor §6/day all §cor §6/day [World]
+      §cor §6/day [Player] §c!
+    translate: §7[§6CityBuild§7] §r§cPlease use §6/day §cor §6/day all §cor §6/day
+      [World] §cor §6/day [Player] §c!
 config:
   join: §6%PLAYER% §ajoined the game!

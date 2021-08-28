@@ -49,13 +49,28 @@ public abstract class Language {
             }
             return help;
         }
-        String[] help = new String[1];
-        help[0] = "§6Das ist noch nicht eingerichtet jetzt";
+        String[] help = new String[2];
+        help[0] = "§6Thats not configurated yet";
+        help[1] = "§6Thats the 2. Message";
 
         cfg.cfg().set("config.help.0", help[0]);
+        cfg.cfg().set("config.help.1", help[1]);
         cfg.save();
 
         return help;
+    }
+    public String getJoinMessage() {
+        if(cfgLang.cfg().contains("config.join")) return cfgLang.cfg().getString("config.join");
+        cfgLang.cfg().set("config.join", "§6%PLAYER% §ajoined the game!");
+        cfgLang.save();
+        return cfgLang.cfg().getString("config.join");
+    }
+
+    public String getQuitMessage() {
+        if(cfgLang.cfg().contains("config.quit")) return cfgLang.cfg().getString("config.quit");
+        cfgLang.cfg().set("config.quit", "§6%PLAYER% §aleaved the game!");
+        cfgLang.save();
+        return cfgLang.cfg().getString("config.quit");
     }
 
 }

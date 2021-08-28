@@ -9,7 +9,7 @@
 
 ## Description
 
-This plugin adds all(but not PlotGeneration) to your
+This plugin adds all(but not PlotGeneration and Worldedit) to your
 CityBuild Server. You must add LuckPerms and a
 Plot Plugin by yourself.
 Wiki: <a target="_blank" href="https://github.com/Lcraft-Developers/CityBuild-Plugin/wiki">Wiki</a>
